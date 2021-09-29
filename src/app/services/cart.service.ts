@@ -20,7 +20,8 @@ export class CartService {
 
   addItemToCart(id: number): void {
     this.cartItemListSubject.next([
-      ...this.cartItemListSubject.getValue().concat(this.filterProduct(id)),
+      ...this.cartItemListSubject.getValue(),
+      ...[this.filterProduct(id)],
     ]);
   }
 
