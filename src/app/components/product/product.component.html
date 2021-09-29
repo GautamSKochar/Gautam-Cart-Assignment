@@ -1,0 +1,7 @@
+<div role="main">
+  <div *ngFor="let product of products$ | async; let i = index">
+    {{ product?.title }}
+    {{ product?.price }}
+    <button (click)="onAddProduct(i)">ADD TO CART</button>
+  </div>
+</div>
