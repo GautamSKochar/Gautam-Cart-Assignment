@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../interfaces/product.interface';
 import { ProductService } from './product.service';
 
@@ -7,8 +7,7 @@ import { ProductService } from './product.service';
   providedIn: 'root',
 })
 export class CartService {
-  // cartItemListSubject: Observable<[Product]> = new BehaviorSubject([]);
-  cartItemListSubject = new Subject<Product[]>();
+  cartItemListSubject = new BehaviorSubject<Product[]>([]);
 
   cartList$: Observable<Product[]> = this.cartItemListSubject.asObservable();
   productList!: Product[];
@@ -20,7 +19,9 @@ export class CartService {
   }
 
   addItemToCart(id: number): void {
-    this.cartItemListSubject.next([this.filterProduct(id)]);
+    this.cartItemListSubject.next([
+      ...this.cartItemListSubject.getValue().concat(this.filterProduct(id)),
+    ]);
   }
 
   filterProduct(id: number): Product {
